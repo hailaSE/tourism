@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserTripTable extends Migration
+class CreateAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateUserTripTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_trip', function (Blueprint $table) {
+        Schema::create('accounts', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('trip_id');
+            $table->unsignedBigInteger('bank_id')->unsigned();
+            $table->String('name');
+            $table->double('balance');
+            $table->foreign('bank_id')->references('id')->on('banks')->onDelete('cascade');
             $table->timestamps();
+
         });
     }
 
@@ -28,6 +31,6 @@ class CreateUserTripTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_trip');
+        Schema::dropIfExists('accounts');
     }
 }

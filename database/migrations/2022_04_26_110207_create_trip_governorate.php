@@ -14,9 +14,12 @@ class CreateTripGovernorate extends Migration
     public function up()
     {
         Schema::create('trip_governorate', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('trip_id');
-            $table->integer('governorate_id');
+            $table->increments('id')->unsigned();
+            $table->integer('trip_id')->unsigned();
+            $table->integer('governorate_id')->unsigned();
+            $table->foreign('trip_id')->references('id')->on('trips')->onDelete('cascade');
+            $table->foreign('governorate_id')->references('id')->on('governorates')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

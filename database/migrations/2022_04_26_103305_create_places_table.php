@@ -15,9 +15,14 @@ class CreatePlacesTable extends Migration
     {
         Schema::create('places', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_type_of_place');
-            $table->integer('id_governorate');
+            $table->integer('id_type_of_place')->unsigned();
+            $table->integer('id_governorate')->unsigned();
+            $table->string('phoneNumber')->nullable();
+            $table->integer('evaluation')->nullable();
             $table->string('name');
+            $table->longText('details')->nullable();
+            $table->foreign('id_type_of_place')->references('id')->on('types_of_places')->onDelete('cascade');
+            $table->foreign('id_governorate')->references('id')->on('governorates')->onDelete('cascade');
             $table->timestamps();
         });
     }
